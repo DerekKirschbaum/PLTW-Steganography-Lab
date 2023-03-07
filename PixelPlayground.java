@@ -6,7 +6,7 @@ public class PixelPlayground {
         Picture newPic = picture;
         Pixel[][] pixels = newPic.getPixels2D();
         for(int i=0; i<pixels.length; i++){
-            for(int j=0; j<pixels[0].length; j++){
+            for(int j=90; j<pixels[0].length; j++){
                 pixels[i][j].setBlue(0);
             }
         }
