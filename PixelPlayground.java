@@ -91,10 +91,93 @@ public class PixelPlayground {
     }
 
 
+    //mirrors left to right
+    public static Picture mirrorVert1 (Picture p) {
+        Picture np = new Picture(p);
+        Pixel [][] pixels = np.getPixels2D();
+        for(int i=0; i<pixels.length; i++){
+            for(int j=0; j<pixels[0].length; j++){
+                pixels[i][np.getWidth()-j-1].setColor(pixels[i][j].getColor());
+            }
+        }
+        return np;
+    }
+
+    //mirrors right to left
+    public static Picture mirrorVert2 (Picture p) {
+        Picture np = new Picture(p);
+        Pixel [][] pixels = np.getPixels2D();
+        for(int i=0; i<pixels.length; i++){
+            for(int j=np.getWidth()-1; j>0; j--){
+                pixels[i][np.getWidth()-j].setColor(pixels[i][j].getColor());
+            }
+        }
+        return np;
+    }
+
+    //mirrors top to bottom
+    public static Picture mirrorHorizontal1 (Picture p) {
+        Picture np = new Picture(p);
+        Pixel [][] pixels = np.getPixels2D();
+        for(int i=0; i<pixels.length; i++){
+            for(int j=0; j<pixels[0].length; j++){
+                pixels[np.getHeight()-i-1][j].setColor(pixels[i][j].getColor());
+            }
+        }
+        return np;
+    }
+
+    //mirrors bottom to top
+    public static Picture mirrorHorizontal2 (Picture p) {
+        Picture np = new Picture(p);
+        Pixel [][] pixels = np.getPixels2D();
+        for(int i=np.getHeight()-1; i>0; i--){
+            for(int j=0; j<pixels[0].length; j++){
+                pixels[np.getHeight()-i][j].setColor(pixels[i][j].getColor());
+            }
+        }
+        return np;
+    }
+
+
+    public static Picture mirrorDiagonal(Picture p) {
+        Picture np = new Picture(p);
+        Pixel [][] pixels = np.getPixels2D();
+
+
+
+        for(int i=0; i<Math.min(np.getWidth(), np.getHeight()); i++){
+            for(int j=0; j<i+1; j++){
+                pixels[j][i].setColor(pixels[i][j].getColor());
+            }
+        }
+        return np;
+    }
+
+    public static Picture mirrorTemple(Picture p) {
+        Picture np = new Picture(p);
+        int mirrorPoint = 276;
+        Pixel leftPixel;
+        Pixel rightPixel;
+        Pixel[][] pixels = np.getPixels2D();
+        // loop through the rows
+        for (int row = 27; row < 97; row++) {
+        // loop from 13 to just before the mirror point
+            for (int col = 13; col < mirrorPoint; col++) {
+                leftPixel = pixels[row][col];
+                rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
+                rightPixel.setColor(leftPixel.getColor());
+            }
+
+        }
+        return np;
+    }   
+
+
     public static void main(String[] args) {
-        Picture beachPic = new Picture("water.jpg");
+        Picture beachPic = new Picture("beardgrowing.jpg");
         beachPic.explore();
-        Picture beachPicNoBlue = fishRevealer(beachPic);
+        Picture beachPicNoBlue = mirrorDiagonal(beachPic);
         beachPicNoBlue.explore();
     }
 }
